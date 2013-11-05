@@ -25,8 +25,9 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  rating_list = rating_list.split(",")
-  rating_list.each do |rating|
+  ratings = rating_list.split(", ")
+  ratings.each do |rating|
+    rating = "ratings_" + rating
     if uncheck
       uncheck(rating)
     else
@@ -35,7 +36,14 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
-
-#When /^(?:|I )press "([^"]*)"$/ do |button|
-#  click_button(button)
-#end
+Then /^(?:|I )should see movies with the following ratings: (.*)/ do |rating_list|
+  rating_list = rating_list.split(",")
+  movie_list = Movie.find_all_by_rating(rating_list)
+  movie_list.each do |movie|
+    if page.respond_to? :should
+      page.should have_content(movie)
+    else
+      assert page.has_content?(movie)
+    end
+  end
+end
