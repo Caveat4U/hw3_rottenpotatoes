@@ -24,9 +24,15 @@ Background: movies have been added to database
 Scenario: restrict to movies with 'PG' or 'R' ratings
   Given I check the following ratings: PG, R
   And I uncheck the following ratings: G, PG-13, NC-17
-  When I press "submit"
-  Then I should see movies with the following ratings: PG, R
+  When I press "ratings_submit"
+  #Then I should see /(\sPG\s|\sR\s)$/
+  #And I should not see /(\sG\s|\sPG-13\s|\sNC-17\s)$/
+  #Then I should see movies with the following ratings: PG, R
   #And I should not see movies with the following ratings: G, PG-13, NC-17
+  Then I should see "When Harry Met Sally"
+  And I should see "The Incredibles"
+  And I should not see "The Help"
+  And I should not see "Chicken Run"
   # enter step(s) to check the 'PG' and 'R' checkboxes
   # enter step(s) to uncheck all other checkboxes
   # enter step to "submit" the search form on the homepage
@@ -38,5 +44,6 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
   # ignored per assignment
 
 Scenario: all ratings selected
-  #Given I check the following ratings: G, PG, PG-13, R, NC-17
-  #When
+  Given I check the following ratings: G, PG, PG-13, R, NC-17
+  When I press "ratings_submit"
+  Then I should see all of the movies

@@ -36,8 +36,13 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
+Then /^I should see all of the movies$/ do
+  pending # express the regexp above with the code you wish you had
+end
+
 Then /^(?:|I )should see movies with the following ratings: (.*)/ do |rating_list|
-  rating_list = rating_list.split(",")
+  rating_list = rating_list.split(", ")
+  logger.fatal "OMG"
   movie_list = Movie.find_all_by_rating(rating_list)
   movie_list.each do |movie|
     if page.respond_to? :should
