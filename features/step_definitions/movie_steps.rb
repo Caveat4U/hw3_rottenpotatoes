@@ -37,7 +37,7 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 end
 
 Then /^I should see all of the movies/ do
-  (page.all('table#movies tr').count - 1).should == Movie.count
+  Movie.count.should == page.all('table#movies tr').count - 1
 end
 
 Then /^(?:|I )should see movies with the following ratings: (.*)/ do |rating_list|
