@@ -27,6 +27,15 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
   rating_list = rating_list.split(",")
   rating_list.each do |rating|
-   #if uncheck ==  
+    if uncheck
+      uncheck(rating)
+    else
+      check(rating)
+    end
   end
 end
+
+
+#When /^(?:|I )press "([^"]*)"$/ do |button|
+#  click_button(button)
+#end
